@@ -16,3 +16,7 @@ Additionally, each part has a set of optional bonus assignments to try once you 
 The [solutions](https://github.com/gSchool/galvanize-bookshelf-solution) are available to instructors as well as students who've completed this series.
 
 #### [⇐ Previous](6_heroku_deployment.md) | [Next ⇒](1_migrations_seeds.md)
+
+
+HEROKU LINK
+https://rosstienken-bookshelf.herokuapp.com/
