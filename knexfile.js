@@ -1,10 +1,9 @@
 'use strict';
-const path = require('path')
 
 module.exports = {
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/bookshelf_dev',
+    connection: 'postgres://localhost/bookshelf_dev'
   },
 
   test: {
