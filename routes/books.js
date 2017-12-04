@@ -117,10 +117,10 @@ router.delete('/books/:id', (req, res, next) => {
   let obj
 
   knex('books')
-    .del()
     .where('id', id)
     .first()
     .then(book => {
+      delete book.id
       obj = {
         title: book.title,
         author: book.author,
