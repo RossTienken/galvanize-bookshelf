@@ -115,11 +115,18 @@ router.patch('/books/:id', (req, res, next) => {
 router.delete('/books/:id', (req, res, next) => {
   const id = req.params.id
   let obj
+  let book
 
   knex('books')
-    .where('id', id)
-    .first()
-    .then(book => {
+    .where('id', id).first()
+    .then(item => {
+      if(!item) return next()
+      book = item
+      return knex('books')
+        .del()
+        .where('id', id)
+      })
+    .then(() => {
       delete book.id
       obj = {
         title: book.title,
