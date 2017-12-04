@@ -109,12 +109,30 @@ router.patch('/books/:id', (req, res, next) => {
     .catch((err) => {
       next(err)
     })
-
 })
 
 //DELETE
 router.delete('/books/:id', (req, res, next) => {
+  const id = req.params.id
+  let obj
 
+  knex('books')
+    .del()
+    .where('id', id)
+    .first()
+    .then(book => {
+      obj = {
+        title: book.title,
+        author: book.author,
+        genre: book.genre,
+        description: book.description,
+        coverUrl: book.cover_url
+      }
+      res.send(obj)
+    })
+    .catch((err) => {
+      next(err)
+    })
 })
 
 
