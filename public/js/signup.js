@@ -40,7 +40,7 @@
       data: JSON.stringify({ firstName, lastName, email, password }),
       dataType: 'json',
       type: 'POST',
-      url: '/token'
+      url: '/users'
     };
 
     $.ajax(options)
