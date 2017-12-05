@@ -6,7 +6,8 @@ exports.up = knex => {
       .references('id')
       .inTable('users')
       .onDelete('CASCADE')
-    table.timestamps(true, true)
+    table.timestamp('created_at').notNullable().defaultsTo(knex.raw('now()'));
+    table.timestamp('updated_at').notNullable().defaultsTo(knex.raw('now()'));
     table.integer('book_id')
       .notNullable()
       .references('id')
