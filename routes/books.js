@@ -32,6 +32,7 @@ router.get('/books', (req, res, next) => {
 //GET ID
 router.get('/books/:id', (req, res, next) => {
   const id = req.params.id
+  if(isNaN(id)) {return next()}
 
   knex('books')
     .select(
@@ -52,11 +53,37 @@ router.get('/books/:id', (req, res, next) => {
       }
       res.json(items[0])
     })
+    .catch((err) => {
+      next(err);
+    });
 })
 
 
 //POST
 router.post('/books', (req, res, next) => {
+  const {title, author, genre, description, coverUrl} = req.body;
+
+  if(!title){
+    res.setHeader('content-type', 'text/plain')
+    return res.status(400).send('Title must not be blank')
+  }
+  if(!author){
+    res.setHeader('content-type', 'text/plain')
+    return res.status(400).send('Author must not be blank')
+  }
+  if(!genre){
+    res.setHeader('content-type', 'text/plain')
+    return res.status(400).send('Genre must not be blank')
+  }
+  if(!description){
+    res.setHeader('content-type', 'text/plain')
+    return res.status(400).send('Description must not be blank')
+  }
+  if(!coverUrl){
+    res.setHeader('content-type', 'text/plain')
+    return res.status(400).send('Cover URL must not be blank')
+  }
+
   knex('books')
     .insert({
       title: req.body.title,
@@ -107,13 +134,14 @@ router.patch('/books/:id', (req, res, next) => {
       res.send(obj)
     })
     .catch((err) => {
-      next(err)
+      next()
     })
 })
 
 //DELETE
 router.delete('/books/:id', (req, res, next) => {
   const id = req.params.id
+  if(isNaN(id)) {return next()}
   let obj
   let book
 
@@ -127,6 +155,7 @@ router.delete('/books/:id', (req, res, next) => {
         .where('id', id)
       })
     .then(() => {
+      if(!book) return next()
       delete book.id
       obj = {
         title: book.title,
