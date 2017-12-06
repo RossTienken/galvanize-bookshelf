@@ -1,6 +1,8 @@
 const express = require('express')
 const knex = require('../knex')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const JWT_KEY = process.env.JWT_KEY
 const router = express.Router()
 
 router.post('/users', (req, res, next) => {
@@ -22,6 +24,10 @@ router.post('/users', (req, res, next) => {
             lastName: user[0].last_name,
             email: user[0].email
           }
+          const token = jwt.sign({ userId: user[0].id }, JWT_KEY)
+          res.cookie('token', token, { httpOnly: true })
+          res.status(200)
+          res.setHeader('Content-Type', 'application/json')
           res.send(newObj)
         })
         .catch((err) => {
