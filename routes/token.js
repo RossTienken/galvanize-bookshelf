@@ -18,6 +18,16 @@ router.get('/token', (req, res) => {
 })
 
 router.post('/token', (req, res, next) => {
+  const { email, password } = req.body
+  if(!email) {
+    res.setHeader('content-type', 'text/plain')
+    return res.status(400).send('Email must not be blank')
+  }
+  if(!password) {
+    res.setHeader('content-type', 'text/plain')
+    return res.status(400).send('Password must not be blank')
+  }
+
   knex('users')
     .where('email', req.body.email)
     .first()
